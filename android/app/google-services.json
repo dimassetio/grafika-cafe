@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "304775036380",
+    "project_id": "grafika-cafe-8fc1d",
+    "storage_bucket": "grafika-cafe-8fc1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304775036380:android:a31cf25a266e153d83a319",
+        "android_client_info": {
+          "package_name": "com.example.grafika_cafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304775036380-n3sd6u3rm0pp20coffftq4va136a5m1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzH6H9sYbNkMtR8bqHkY_Q2d2orlI0xxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304775036380-n3sd6u3rm0pp20coffftq4va136a5m1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

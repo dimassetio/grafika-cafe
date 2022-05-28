@@ -12,6 +12,8 @@ abstract class Routes {
   static const FORM_MENU = _Paths.FORM_MENU;
   static const DETAIL_MENU = _Paths.DETAIL_MENU;
   static const TRANSAKSI = _Paths.TRANSAKSI;
+  static const LAPORAN = _Paths.LAPORAN;
+  static const DETAIL_LAPORAN = _Paths.DETAIL_LAPORAN;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const FORM_MENU = '/form-menu';
   static const DETAIL_MENU = '/detail-menu';
   static const TRANSAKSI = '/transaksi';
+  static const LAPORAN = '/laporan';
+  static const DETAIL_LAPORAN = '/detail-laporan';
 }

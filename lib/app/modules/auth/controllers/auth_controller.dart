@@ -86,11 +86,15 @@ class AuthController extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
         var newUser = UserModel(
+          id: value.user?.uid,
           email: email,
           name: name,
           role: role,
         );
-        newUser.save(file: photo).then((value) {
+        newUser.db.collectionReference
+            .doc(newUser.id)
+            .set(newUser.toJson())
+            .then((value) {
           Get.back();
           toast("Register Success");
         });

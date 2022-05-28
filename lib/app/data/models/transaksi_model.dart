@@ -57,7 +57,19 @@ class TransaksiModel {
     if (id.isEmptyOrNull) {
       dateCreated = DateTime.now();
     }
-    id.isEmptyOrNull ? id = await db.add(toJson()) : await db.edit(toJson());
+    if (id.isEmptyOrNull) {
+      id = await db.add(toJson());
+      if (detailTransaksi != null) {
+        for (var item in detailTransaksi!) {
+          db.collectionReference
+              .doc(id)
+              .collection(detailTransaksiCollection)
+              .add(item.toJson());
+        }
+      }
+    } else
+      await db.edit(toJson());
+
     if (file != null && !id.isEmptyOrNull) {
       // photo = await db.upload(id: id!, file: file);
       db.edit(toJson());
@@ -90,7 +102,7 @@ class DetailTransaksi {
   static const SUBTOTALHARGA = "subTotalharga";
   static const DATECREATED = "dateCreated";
 
-  TransaksiModel transaksi;
+  TransaksiModel? transaksi;
   String? id;
   String? menuId;
   int? jumlah;
@@ -99,10 +111,10 @@ class DetailTransaksi {
   DateTime? dateCreated;
 
   DetailTransaksi({
-    required this.transaksi,
+    this.transaksi,
     this.id,
     this.menuId,
-    this.jumlah,
+    this.jumlah = 0,
     this.subTotalHarga,
     this.menuModel,
     this.dateCreated,
@@ -120,6 +132,26 @@ class DetailTransaksi {
     return this;
   }
 
+  DetailTransaksi.fromMenu(MenuModel menu) {
+    menuId = menu.id;
+    menuModel = menu;
+    jumlah = 1;
+    subTotalHarga = ((menu.harga ?? 0) * (jumlah ?? 0));
+  }
+
+  addJumlah() {
+    jumlah = (jumlah ?? 0) + 1;
+
+    subTotalHarga = (jumlah ?? 0) * (menuModel?.harga ?? 0);
+  }
+
+  removeJumlah() {
+    if ((jumlah ?? 0) > 0) {
+      jumlah = (jumlah ?? 0) - 1;
+      subTotalHarga = (jumlah ?? 0) * (menuModel?.harga ?? 0);
+    }
+  }
+
   Map<String, dynamic> toJson() {
     return {
       ID: this.id,
@@ -133,7 +165,7 @@ class DetailTransaksi {
   Database get db => Database(
         collectionReference: firestore
             .collection(detailTransaksiCollection)
-            .doc(transaksi.id)
+            .doc(transaksi?.id)
             .collection(detailTransaksiCollection),
       );
   Future<DetailTransaksi> save({File? file}) async {

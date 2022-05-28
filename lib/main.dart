@@ -17,7 +17,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: ThemeData(primarySwatch: Colors.amber),
+      // theme: ThemeData(),
     ),
   );
 }

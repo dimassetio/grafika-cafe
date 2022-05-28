@@ -40,6 +40,9 @@ class HomeView extends GetView<HomeController> {
               case 2:
                 Get.toNamed(Routes.TRANSAKSI);
                 break;
+              case 3:
+                Get.toNamed(Routes.LAPORAN);
+                break;
               case 4:
                 Get.toNamed(Routes.USERS);
                 break;

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
+import '../modules/detail_laporan/bindings/detail_laporan_binding.dart';
+import '../modules/detail_laporan/views/detail_laporan_view.dart';
 import '../modules/form_menu/bindings/form_menu_binding.dart';
 import '../modules/form_menu/views/form_menu_view.dart';
 import '../modules/form_user/bindings/form_user_binding.dart';
@@ -10,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/index_menu/bindings/index_menu_binding.dart';
 import '../modules/index_menu/views/index_menu_view.dart';
+import '../modules/laporan/bindings/laporan_binding.dart';
+import '../modules/laporan/views/laporan_view.dart';
 import '../modules/transaksi/bindings/transaksi_binding.dart';
 import '../modules/transaksi/views/transaksi_view.dart';
 import '../modules/users/bindings/users_binding.dart';
@@ -75,6 +79,16 @@ class AppPages {
       name: _Paths.TRANSAKSI,
       page: () => TransaksiView(),
       binding: TransaksiBinding(),
+    ),
+    GetPage(
+      name: _Paths.LAPORAN,
+      page: () => LaporanView(),
+      binding: LaporanBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_LAPORAN,
+      page: () => DetailLaporanView(),
+      binding: DetailLaporanBinding(),
     ),
   ];
 }

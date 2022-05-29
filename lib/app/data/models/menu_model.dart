@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:grafika_cafe/app/data/helpers/Database.dart';
+import 'package:grafika_cafe/app/data/models/log_model.dart';
+import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class MenuModel {
@@ -65,7 +67,15 @@ class MenuModel {
     if (id.isEmptyOrNull) {
       dateCreated = DateTime.now();
     }
-    id.isEmptyOrNull ? id = await db.add(toJson()) : await db.edit(toJson());
+    if (id.isEmptyOrNull) {
+      id = await db.add(toJson());
+      Log.add("${AuthController.instance.user.name} membuat menu baru '$name'")
+          .save();
+    } else {
+      await db.edit(toJson());
+      Log.add("${AuthController.instance.user.name} mengedit menu '$name'")
+          .save();
+    }
     if (file != null && !id.isEmptyOrNull) {
       photo = await db.upload(id: id!, file: file);
       db.edit(toJson());

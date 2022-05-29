@@ -7,6 +7,7 @@ import 'package:grafika_cafe/app/data/models/menu_model.dart';
 import 'package:grafika_cafe/app/data/models/user_model.dart';
 import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:grafika_cafe/app/routes/app_pages.dart';
+import 'package:grafika_cafe/app/widgets/bottomBar.dart';
 import 'package:grafika_cafe/app/widgets/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,6 +18,9 @@ class IndexMenuView extends GetView<IndexMenuController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomBar(
+        currentMenu: BottomBar.MENU,
+      ),
       floatingActionButton:
           authC.user.hasRole(Role.manajer) || authC.user.hasRole(Role.admin)
               ? FloatingActionButton(

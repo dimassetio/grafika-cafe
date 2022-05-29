@@ -14,6 +14,7 @@ import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:grafika_cafe/app/modules/index_menu/views/index_menu_view.dart';
 import 'package:grafika_cafe/app/modules/transaksi/controllers/transaksi_controller.dart';
 import 'package:grafika_cafe/app/routes/app_pages.dart';
+import 'package:grafika_cafe/app/widgets/bottomBar.dart';
 import 'package:grafika_cafe/app/widgets/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -63,7 +64,7 @@ class TransaksiView extends GetView<TransaksiController> {
                             title: text("${controller.orderMenu.length} Menu"),
                             subtitle: inputText(
                               textFieldType: TextFieldType.PHONE,
-                              label: "No. Meja",
+                              label: "Table Number",
                               isValidationRequired: true,
                               controller: controller.noMejaC,
                             ),
@@ -144,6 +145,9 @@ class TransaksiView extends GetView<TransaksiController> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomBar(
+        currentMenu: BottomBar.ORDER,
       ),
       body: Container(
         height: Get.height,
@@ -229,38 +233,45 @@ class OrderMenuCard extends GetView<TransaksiController> {
 }
 
 class OrderDetailCard extends GetView<TransaksiController> {
-  OrderDetailCard({required this.orderDetail});
+  OrderDetailCard({
+    required this.orderDetail,
+    this.showOnly = false,
+  });
   DetailTransaksi orderDetail;
+  bool showOnly;
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
-          title: text(orderDetail.menuModel?.name ?? "Nama Menu"),
+          title: text(orderDetail.menuModel?.name ?? "-- Nama Menu --"),
           subtitle: text(
             currencyFormatter(orderDetail.subTotalHarga),
           ),
-          trailing: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    (orderDetail.jumlah ?? 0) > 1
-                        ? orderDetail.removeJumlah()
-                        : controller.orderMenu.remove(orderDetail);
-                    controller.orderMenu.refresh();
-                  },
-                  icon: Icon(Icons.remove)),
-              text((orderDetail.jumlah ?? 0).toString()),
-              IconButton(
-                  onPressed: () {
-                    orderDetail.addJumlah();
-                    controller.orderMenu.refresh();
-                  },
-                  icon: Icon(Icons.add)),
-            ],
-          )),
+          trailing: showOnly
+              ? CircleAvatar(
+                  radius: 12, child: text(orderDetail.jumlah.toString()))
+              : Wrap(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          (orderDetail.jumlah ?? 0) > 1
+                              ? orderDetail.removeJumlah()
+                              : controller.orderMenu.remove(orderDetail);
+                          controller.orderMenu.refresh();
+                        },
+                        icon: Icon(Icons.remove)),
+                    text((orderDetail.jumlah ?? 0).toString()),
+                    IconButton(
+                        onPressed: () {
+                          orderDetail.addJumlah();
+                          controller.orderMenu.refresh();
+                        },
+                        icon: Icon(Icons.add)),
+                  ],
+                )),
     );
   }
 }

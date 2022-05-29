@@ -9,6 +9,7 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
 const userCollection = "users";
 const menuCollection = "menus";
+const logCollection = "logs";
 const transaksiCollection = "transaksi";
 const detailTransaksiCollection = "detailTransaksi";
 

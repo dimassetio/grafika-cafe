@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:grafika_cafe/app/routes/app_pages.dart';
+import 'package:grafika_cafe/app/widgets/bottomBar.dart';
 import 'package:grafika_cafe/app/widgets/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../controllers/home_controller.dart';
@@ -27,51 +28,8 @@ class HomeView extends GetView<HomeController> {
                 icon: Icon(Icons.logout))
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            switch (index) {
-              case 0:
-                Get.toNamed(Routes.HOME);
-                break;
-              case 1:
-                Get.toNamed(Routes.INDEX_MENU);
-                break;
-              case 2:
-                Get.toNamed(Routes.TRANSAKSI);
-                break;
-              case 3:
-                Get.toNamed(Routes.LAPORAN);
-                break;
-              case 4:
-                Get.toNamed(Routes.USERS);
-                break;
-              default:
-            }
-          },
-          showUnselectedLabels: false,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood_rounded),
-              label: "Menu",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_shopping_cart_rounded),
-              label: "Order",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long),
-              label: "Report",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.group),
-              label: "Users",
-            ),
-          ],
+        bottomNavigationBar: BottomBar(
+          currentMenu: BottomBar.HOME,
         ),
         body: Container(
           padding: EdgeInsets.all(16),

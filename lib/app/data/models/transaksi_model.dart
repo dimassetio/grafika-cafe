@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:grafika_cafe/app/data/helpers/Database.dart';
+import 'package:grafika_cafe/app/data/models/log_model.dart';
 import 'package:grafika_cafe/app/data/models/menu_model.dart';
+import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class TransaksiModel {
@@ -67,8 +69,14 @@ class TransaksiModel {
               .add(item.toJson());
         }
       }
-    } else
+      Log.add("${AuthController.instance.user.name} membuat transaksi baru")
+          .save();
+    } else {
       await db.edit(toJson());
+
+      Log.add("${AuthController.instance.user.name} mengedit transaksi $id")
+          .save();
+    }
 
     if (file != null && !id.isEmptyOrNull) {
       // photo = await db.upload(id: id!, file: file);
@@ -92,6 +100,25 @@ class TransaksiModel {
     return id.isEmptyOrNull
         ? null
         : TransaksiModel.fromSnapshot(await db.getID(id!));
+  }
+
+  Future<List<DetailTransaksi>> getAllDetail() async {
+    if (!id.isEmptyOrNull) {
+      var list = await db.collectionReference
+          .doc(id)
+          .collection(detailTransaksiCollection)
+          .get()
+          .then((value) => value.docs.map((e) {
+                var detail = DetailTransaksi().fromSnapshot(e, this);
+                detail.getMenu();
+                return detail;
+              }).toList());
+      list.forEach((element) async {
+        await element.getMenu();
+      });
+      return list;
+    }
+    return [];
   }
 }
 
@@ -191,9 +218,14 @@ class DetailTransaksi {
     }
   }
 
-  Future<TransaksiModel?> get() async {
-    return id.isEmptyOrNull
-        ? null
-        : TransaksiModel.fromSnapshot(await db.getID(id!));
+  Future<MenuModel?> getMenu() async {
+    menuModel = await MenuModel(id: menuId).get();
+    return menuModel;
   }
+
+  // Future<DetailTransaksi?> get() async {
+  //   return id.isEmptyOrNull
+  //       ? null
+  //       : DetailTransaksi.fromSnapshot(await db.getID(id!));
+  // }
 }

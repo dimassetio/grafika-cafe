@@ -15,7 +15,7 @@ void main() async {
     GetMaterialApp(
       title: "Grafika Cafe",
       debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.INITIAL,
+      initialRoute: authC.isLoggedIn ? Routes.HOME : Routes.AUTH,
       getPages: AppPages.routes,
       // theme: ThemeData(),
     ),

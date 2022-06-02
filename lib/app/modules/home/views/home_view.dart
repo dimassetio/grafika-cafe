@@ -14,10 +14,10 @@ class HomeView extends GetView<HomeController> {
   AuthController authC = Get.find();
   @override
   Widget build(BuildContext context) {
-    if (!authC.isLoggedIn) {
-      print("Redirect to Auth");
-      Get.toNamed(Routes.AUTH);
-    }
+    // if (!authC.isLoggedIn) {
+    //   print("Redirect to Auth");
+    //   Get.toNamed(Routes.AUTH);
+    // }
     return Scaffold(
         appBar: AppBar(
           title: Text('Home'),

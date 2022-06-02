@@ -7,6 +7,7 @@ import 'package:grafika_cafe/app/const/color.dart';
 import 'package:grafika_cafe/app/data/models/user_model.dart';
 import 'package:grafika_cafe/app/modules/auth/controllers/auth_controller.dart';
 import 'package:grafika_cafe/app/routes/app_pages.dart';
+import 'package:grafika_cafe/app/widgets/bottomBar.dart';
 import 'package:grafika_cafe/app/widgets/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -21,6 +22,9 @@ class UsersView extends GetView<UsersController> {
         appBar: AppBar(
           title: Text('Manage User'),
           centerTitle: true,
+        ),
+        bottomNavigationBar: BottomBar(
+          currentMenu: BottomBar.USERS,
         ),
         floatingActionButton: Obx(() =>
             authC.user.hasRole(Role.admin) || authC.user.hasRole(Role.manajer)
